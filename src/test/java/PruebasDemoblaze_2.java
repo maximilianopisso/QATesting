@@ -42,6 +42,7 @@ public class PruebasDemoblaze_2 {
         //Me creo alerta para leer alert de la web y lee el texto del alert para compararlo luego
         Alert alert = driver.switchTo().alert();
         String alertmessage = alert.getText();
+        alert.accept();
 
         //Compara texto leido del alert, con el texto esperado "producot agregado"
         Assert.assertEquals("Product added", alertmessage);
