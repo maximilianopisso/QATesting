@@ -20,20 +20,28 @@ public class PruebasDemoblaze_2 {
         driver.manage().window().maximize();
         driver.navigate().to(url);
 
+        //Busco Link a Laptos
         driver.findElement(By.linkText("Laptops")).click();
         Thread.sleep(2000);
-        driver.findElement(By.linkText("Sony vaio i5")).click();
+
+        //Hacer link en el primer producto
+        driver.findElement(By.cssSelector("img.card-img-top")).click();
         Thread.sleep(2000);
+
+        //Obtengo modelo yprecio del articulo e imprimo en consola
         modelo = driver.findElement(By.cssSelector("h2.name")).getText();
         precio = driver.findElement(By.cssSelector("h3.price-container")).getText();
         System.out.println("Modelo:" + modelo + "Precio:" + precio );
+
+        //Agrego al cart el producto seleccionado
         driver.findElement(By.linkText("Add to cart")).click();
         Thread.sleep(2000);
 
-        //Me creo alerta para leer alert de la web
+        //Me creo alerta para leer alert de la web y lee el texto del alert para compararlo luego
         Alert alert = driver.switchTo().alert();
         String alertmessage = alert.getText();
 
+        //Compara texto leido del alert, con el texto esperado "producot agregado"
         Assert.assertEquals("Product added", alertmessage);
         driver.quit();
 
