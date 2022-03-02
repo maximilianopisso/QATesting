@@ -2,6 +2,7 @@ import Utility.DriverFactory;
 import Utility.PropertiesFile;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -20,17 +21,20 @@ public class PruebasDemoblaze_2 {
         driver.navigate().to(url);
 
         driver.findElement(By.linkText("Laptops")).click();
-        driver.wait(6000);
+        Thread.sleep(2000);
         driver.findElement(By.linkText("Sony vaio i5")).click();
-        driver.wait(6000);
+        Thread.sleep(2000);
         modelo = driver.findElement(By.cssSelector("h2.name")).getText();
         precio = driver.findElement(By.cssSelector("h3.price-container")).getText();
         System.out.println("Modelo:" + modelo + "Precio:" + precio );
-        driver.wait(6000);
         driver.findElement(By.linkText("Add to cart")).click();
+        Thread.sleep(2000);
 
-        //Me gustaria tomar al alert y compararlo con el msj de que se agrego al carro
-        Assert.assertEquals("Product added", driver.getCurrentUrl());
+        //Me creo alerta para leer alert de la web
+        Alert alert = driver.switchTo().alert();
+        String alertmessage = alert.getText();
+
+        Assert.assertEquals("Product added", alertmessage);
         driver.quit();
 
     }
