@@ -25,7 +25,9 @@ public class PruebasDemoblaze_2 {
         Thread.sleep(2000);
 
         //Hacer link en el primer producto
-        driver.findElement(By.cssSelector("img.card-img-top")).click();
+        //driver.findElement(By.cssSelector("img.card-img-top")).click();
+        driver.findElement(By.cssSelector("div#tbodyid>div:nth-child(1)>div>a")).click();
+
         Thread.sleep(2000);
 
         //Obtengo modelo yprecio del articulo e imprimo en consola
