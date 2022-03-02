@@ -28,9 +28,9 @@ public class PruebasDemoblaze_2 {
         System.out.println("Modelo:" + modelo + "Precio:" + precio );
         driver.wait(6000);
         driver.findElement(By.linkText("Add to cart")).click();
-        //Me gustaria tomar al alert y compararlo con el msj de que se agrego al carro
 
-        Assert.assertEquals("https://www.demoblaze.com/prod.html?idp_=8", driver.getCurrentUrl());
+        //Me gustaria tomar al alert y compararlo con el msj de que se agrego al carro
+        Assert.assertEquals("Product added", driver.getCurrentUrl());
         driver.quit();
 
     }
