@@ -5,6 +5,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.util.concurrent.TimeUnit;
+
 public class DriverFactory {
     public static WebDriver driver;
     public static String driverPath = "./src/main/resources/drivers/";
@@ -23,6 +25,9 @@ public class DriverFactory {
             System.setProperty("webdriver.edge.driver", driverPath + "msedgedriver.exe");
             driver = new EdgeDriver();
         }
+        //Configuracion de espera implicita en el driver
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        System.out.println("Tiempo implicit Wait: " + driver.manage().timeouts().getImplicitWaitTimeout());
         return driver;
     }
 }
