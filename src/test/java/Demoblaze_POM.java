@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public class Demoblaze {
+public class Demoblaze_POM {
 
     private String url = PropertiesFile.getProperty("url");
     private WebDriver driver = DriverFactory.getDriver();
