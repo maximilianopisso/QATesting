@@ -37,7 +37,7 @@ public class Demoblaze {
         wait.until(ExpectedConditions.elementToBeClickable(firstProduct));
         driver.findElement(firstProduct).click();
 
-       //Obtengo modelo y precio del articulo e imprimo en consola
+        //Obtengo modelo y precio del articulo e imprimo en consola
         modelo = driver.findElement(model).getText();
         precio = driver.findElement(price).getText();
         System.out.println("Modelo: " + modelo + "\n"+ "Precio: " + precio );

@@ -14,12 +14,11 @@
     </properties>
 
     <dependencies>
-        <!-- NO AGREGUE LAS ULTIMAS VERSIONES PORQUE ME DABAN ERROR, sino seria 4.13.2 y 4.1.2 respectivamente-->
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.5</version>
             <scope>test</scope>
         </dependency>
 
