@@ -1,3 +1,6 @@
+import Pages.IndexPage;
+import Pages.LaptopsPage;
+import Pages.ProductDetailPage;
 import Utility.DriverFactory;
 import Utility.PropertiesFile;
 import org.junit.Assert;
@@ -20,32 +23,30 @@ public class Demoblaze_POM {
         String modelo;
         String precio;
 
-        //definicion de locators
-        By firstProduct = By.xpath("//div[@id='tbodyid']//div[1]//div[1]//a[1]//img");
-        By laptopCategory = By.linkText("Laptops");
-        By model = By.cssSelector("h2.name");
-        By price = By.cssSelector("h3.price-container");
+        // Instancias de Pages
+        IndexPage indexPage = new IndexPage(driver);
+        LaptopsPage laptopsPage = new LaptopsPage(driver);
+        ProductDetailPage productDetailPage = new ProductDetailPage(driver);
 
         driver.manage().window().maximize();
         driver.navigate().to(url);
 
         //Clickear Categoria Laptops
-        driver.findElement(laptopCategory).click();
+        indexPage.clickLaptopCategory();
 
         //Esperar al que el primer producto sea clicleable y hacerle click
-        WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.elementToBeClickable(firstProduct));
-        driver.findElement(firstProduct).click();
+        laptopsPage.clickFirstLaptop();
 
         //Obtengo modelo y precio del articulo e imprimo en consola
-        modelo = driver.findElement(model).getText();
-        precio = driver.findElement(price).getText();
+        modelo = productDetailPage.getModel();
+        precio = productDetailPage.getPrice();
         System.out.println("Modelo: " + modelo + "\n"+ "Precio: " + precio );
 
         //Agrego al cart el producto seleccionado
-        driver.findElement(By.linkText("Add to cart")).click();
+        productDetailPage.clickAddToCart();
 
         //Espero a que aparezca la alerta, obtengo su texto y la acepto.
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         String alertmessage = alert.getText();
@@ -53,6 +54,7 @@ public class Demoblaze_POM {
 
         //Compara texto de la alerta con el texto esperado "producto agregado"
         Assert.assertEquals("Product added", alertmessage);
+
 
         //Cierro Navegador
         driver.quit();
