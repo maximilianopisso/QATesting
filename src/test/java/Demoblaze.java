@@ -40,7 +40,7 @@ public class Demoblaze {
        //Obtengo modelo y precio del articulo e imprimo en consola
         modelo = driver.findElement(model).getText();
         precio = driver.findElement(price).getText();
-        System.out.println("Modelo:" + modelo + "Precio:" + precio );
+        System.out.println("Modelo: " + modelo + "\n"+ "Precio: " + precio );
 
         //Agrego al cart el producto seleccionado
         driver.findElement(By.linkText("Add to cart")).click();
