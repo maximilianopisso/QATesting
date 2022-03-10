@@ -23,8 +23,8 @@ public class Demoblaze {
         //definicion de locators
         By firstProduct = By.xpath("//div[@id='tbodyid']//div[1]//div[1]//a[1]//img");
         By laptopCategory = By.linkText("Laptops");
-        By price = By.cssSelector("h2.name");
-        By model = By.cssSelector("h3.price-container");
+        By model = By.cssSelector("h2.name");
+        By price = By.cssSelector("h3.price-container");
 
         driver.manage().window().maximize();
         driver.navigate().to(url);
@@ -38,8 +38,8 @@ public class Demoblaze {
         driver.findElement(firstProduct).click();
 
        //Obtengo modelo y precio del articulo e imprimo en consola
-        modelo = driver.findElement(price).getText();
-        precio = driver.findElement(model).getText();
+        modelo = driver.findElement(model).getText();
+        precio = driver.findElement(price).getText();
         System.out.println("Modelo:" + modelo + "Precio:" + precio );
 
         //Agrego al cart el producto seleccionado
