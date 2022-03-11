@@ -14,25 +14,25 @@ public class ProductDetailPage {
     @FindBy(css = "h3.price-container")
     WebElement price;
 
-    @FindBy(linkText ="Add to cart")
+    @FindBy(linkText = "Add to cart")
     WebElement addToCart;
 
     WebDriver driver;
 
-    public ProductDetailPage(WebDriver driver){
+    public ProductDetailPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public String getPrice (){
+    public String getPrice() {
         return price.getText();
     }
 
-    public String getModel (){
+    public String getModel() {
         return model.getText();
     }
 
-    public void clickAddToCart(){
+    public void clickAddToCart() {
         addToCart.click();
     }
 

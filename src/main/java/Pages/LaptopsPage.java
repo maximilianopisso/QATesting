@@ -19,8 +19,8 @@ public class LaptopsPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void clickFirstLaptop(){
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+    public void clickFirstLaptop(int time){
+        WebDriverWait wait = new WebDriverWait(driver,time);
         wait.until(ExpectedConditions.elementToBeClickable(laptopsFirstProduct)).click();
     }
 }
