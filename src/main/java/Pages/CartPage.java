@@ -1,28 +1,28 @@
 package Pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+public class CartPage {
 
-public class WaitsPage {
+    @FindBy(xpath = "//tr[@class='success']//td//img")
+    WebElement firstProductAdded;
 
     WebDriver driver;
 
-    public WaitsPage(WebDriver driver) {
+    public CartPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public void explicitWaitIsClickeable(WebElement element, int time) throws InterruptedException {
+    public boolean imageProductIsVisible(int time) {
         WebDriverWait wait = new WebDriverWait(driver, time);
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-    }
-
-    public void explicitWaitAlertPresent(int time) {
-        WebDriverWait wait = new WebDriverWait(driver, time);
-        wait.until(ExpectedConditions.alertIsPresent());
+        wait.until(ExpectedConditions.elementToBeClickable(firstProductAdded));
+        return firstProductAdded.isDisplayed();
     }
 }

@@ -6,7 +6,8 @@ import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class Demoblaze_POM {
@@ -16,7 +17,8 @@ public class Demoblaze_POM {
 
     @Test
     public void addToCartFistProductLaptops() throws InterruptedException {
-        // definicion de variables locales
+
+        // Definicion de variables locales
         String modelo;
         String precio;
 
@@ -25,42 +27,42 @@ public class Demoblaze_POM {
         LaptopsPage laptopsPage = new LaptopsPage(driver);
         ProductDetailPage productDetailPage = new ProductDetailPage(driver);
         MenuPage menuPage = new MenuPage(driver);
-        WaitsPage waitsPage = new WaitsPage(driver);
+        CartPage cartPage = new CartPage(driver);
 
         driver.manage().window().maximize();
         driver.navigate().to(url);
 
-        //Clickear Categoria Laptops
+        // Clickear Categoria Laptops
         indexPage.clickLaptopCategory();
 
-        //Esperar al que el primer producto sea clicleable y hacerle click
+        // Espera a que sea clicleable y le hace click
         laptopsPage.clickFirstLaptop(10);
 
-        //Obtengo modelo y precio del articulo e imprimo en consola
+        // Obtengo modelo y precio del articulo e imprimo en consola
         modelo = productDetailPage.getModel();
         precio = productDetailPage.getPrice();
         System.out.println("Modelo: " + modelo + "\n" + "Precio: " + precio);
 
-        //Agrego al cart el producto seleccionado
+        // Agrego al cart el producto seleccionado
         productDetailPage.clickAddToCart();
 
-        //Espero a que aparezca la alerta, obtengo su texto y la acepto.
-        waitsPage.explicitWaitAlertPresent(5);
+        // Espero a que aparezca la alerta, obtengo su texto y la acepto.
+        WebDriverWait wait = new WebDriverWait(driver, 10 );
+        wait.until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         String alertmessage = alert.getText();
         alert.accept();
 
-        //Compara texto de la alerta con el texto esperado "producto agregado"
+        // Compara texto de la alerta con el texto esperado "producto agregado"
         Assert.assertEquals("Product added", alertmessage);
 
-        //Ingreso Tab Cart
+        // Ingreso Tab Cart
         menuPage.navigateToCart();
 
-        //Espero hasta que se muestre el producto agregado
-        waitsPage.explicitWaitIsClickeable(driver.findElement(By.xpath("//tr[@class='success']//td//img")), 5);
+        // Espero hasta que se muestre el producto agregado y compruebo que se muestre en el carrito
+        Assert.assertTrue(cartPage.imageProductIsVisible(10));
 
-        //Cierro Navegador
+        // Cierro Navegador
         driver.quit();
-
     }
 }
