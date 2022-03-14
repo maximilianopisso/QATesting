@@ -1,19 +1,27 @@
 import Pages.*;
 import Utility.DriverFactory;
 import Utility.PropertiesFile;
-import org.junit.Assert;
-import org.junit.Test;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 
-public class Demoblaze_POM {
+public class DemoblazeTestNG {
 
     private String url = PropertiesFile.getProperty("url");
     private WebDriver driver = DriverFactory.getDriver();
+
+    @BeforeTest
+    public void beforeTest() {
+        System.out.println("Execution Before Test");
+        driver.manage().window().maximize();
+        driver.navigate().to(url);
+    }
 
     @Test
     public void addToCartFistProductLaptops() throws InterruptedException {
@@ -28,9 +36,7 @@ public class Demoblaze_POM {
         ProductDetailPage productDetailPage = new ProductDetailPage(driver);
         MenuPage menuPage = new MenuPage(driver);
         CartPage cartPage = new CartPage(driver);
-
-        driver.manage().window().maximize();
-        driver.navigate().to(url);
+        PlaceOrderPage placeOrderPage =new PlaceOrderPage(driver);
 
         // Clickear Categoria Laptops
         indexPage.clickLaptopCategory();
@@ -40,14 +46,14 @@ public class Demoblaze_POM {
 
         // Obtengo modelo y precio del articulo e imprimo en consola
         modelo = productDetailPage.getModel();
-        precio = productDetailPage.getPrice();
-        System.out.println("Modelo: " + modelo + "\n" + "Precio: " + precio);
+        precio = convertirAPrecio(productDetailPage.getPrice());
+        System.out.println("Product Detail Info:" + "\n" + "Modelo: " + modelo + "\n" + "Precio: " + precio);
 
         // Agrego al cart el producto seleccionado
         productDetailPage.clickAddToCart();
 
         // Espero a que aparezca la alerta, obtengo su texto y la acepto.
-        WebDriverWait wait = new WebDriverWait(driver, 10 );
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         String alertmessage = alert.getText();
@@ -59,10 +65,27 @@ public class Demoblaze_POM {
         // Ingreso Tab Cart
         menuPage.navigateToCart();
 
-        // Espero hasta que se muestre el producto agregado y compruebo que se muestre en el carrito
-        Assert.assertTrue(cartPage.imageProductIsVisible(10));
+        // Obtengo titulo y precio
+        System.out.println("Cart Info:" + "\n" +"Título: " + cartPage.getTittle(10) +"\n"+ "Precio: " + cartPage.getPrice(10));
+        Assert.assertEquals(modelo, cartPage.getTittle(10));
+        Assert.assertEquals(precio, cartPage.getPrice(10));
 
+        cartPage.clickOrder();
+
+        //Completar Formulario de Compra y Click en "Purchase"
+        placeOrderPage.formComplete(10);
+        placeOrderPage.clickPurchase();
+    }
+
+    @AfterTest
+    public void AfterTest() {
+        System.out.println("Execution After Test");
         // Cierro Navegador
-        driver.quit();
+        //driver.quit();
+    }
+
+    public String convertirAPrecio(String price) {
+        int finPrecio = price.indexOf("*") - 1;
+        return (price.substring(1, finPrecio));
     }
 }

@@ -27,7 +27,7 @@ public class DriverFactory {
         }
         //Configuracion de espera implicita en el driver
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        System.out.println("Tiempo implicit Wait: " + driver.manage().timeouts().getImplicitWaitTimeout());
+        System.out.println("Tiempo implicit Wait - Driver: " + driver.manage().timeouts().getImplicitWaitTimeout());
         return driver;
     }
 }

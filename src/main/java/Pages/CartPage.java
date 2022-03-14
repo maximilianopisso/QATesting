@@ -10,8 +10,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CartPage {
 
-    @FindBy(xpath = "//tr[@class='success']//td//img")
-    WebElement firstProductAdded;
+    @FindBy(xpath = "//tr[@class='success']//td[1]//img")
+    WebElement firstImgProductAdded;
+
+    @FindBy(xpath = "//tr[@class='success']//td[2]")
+    WebElement firstTittleProductAdded;
+
+    @FindBy(xpath = "//tr[@class='success']//td[3]")
+    WebElement firstPriceProductAdded;
+
+    @FindBy(xpath="//button[text()='Place Order']")
+    WebElement buttonOrder;
 
     WebDriver driver;
 
@@ -22,7 +31,23 @@ public class CartPage {
 
     public boolean imageProductIsVisible(int time) {
         WebDriverWait wait = new WebDriverWait(driver, time);
-        wait.until(ExpectedConditions.elementToBeClickable(firstProductAdded));
-        return firstProductAdded.isDisplayed();
+        wait.until(ExpectedConditions.elementToBeClickable(firstImgProductAdded));
+        return firstImgProductAdded.isDisplayed();
+    }
+
+    public String getTittle(int time) {
+        WebDriverWait wait = new WebDriverWait(driver, time);
+        wait.until(ExpectedConditions.elementToBeClickable(firstTittleProductAdded));
+        return firstTittleProductAdded.getText();
+    }
+
+    public String getPrice(int time) {
+        WebDriverWait wait = new WebDriverWait(driver, time);
+        wait.until(ExpectedConditions.elementToBeClickable(firstPriceProductAdded));
+        return firstPriceProductAdded.getText();
+    }
+
+    public void clickOrder(){
+        buttonOrder.click();
     }
 }
