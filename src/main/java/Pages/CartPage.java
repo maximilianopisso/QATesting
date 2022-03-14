@@ -31,23 +31,25 @@ public class CartPage {
 
     public boolean imageProductIsVisible(int time) {
         WebDriverWait wait = new WebDriverWait(driver, time);
-        wait.until(ExpectedConditions.elementToBeClickable(firstImgProductAdded));
+        wait.until(ExpectedConditions.visibilityOf(firstImgProductAdded));
         return firstImgProductAdded.isDisplayed();
     }
 
     public String getTittle(int time) {
         WebDriverWait wait = new WebDriverWait(driver, time);
-        wait.until(ExpectedConditions.elementToBeClickable(firstTittleProductAdded));
+        wait.until(ExpectedConditions.visibilityOf(firstTittleProductAdded));
         return firstTittleProductAdded.getText();
     }
 
     public String getPrice(int time) {
         WebDriverWait wait = new WebDriverWait(driver, time);
-        wait.until(ExpectedConditions.elementToBeClickable(firstPriceProductAdded));
+        wait.until(ExpectedConditions.visibilityOf(firstPriceProductAdded));
         return firstPriceProductAdded.getText();
     }
 
-    public void clickOrder(){
+    public void clickOrder(int time){
+        WebDriverWait wait = new WebDriverWait(driver, time);
+        wait.until(ExpectedConditions.elementToBeClickable(buttonOrder));
         buttonOrder.click();
     }
 }

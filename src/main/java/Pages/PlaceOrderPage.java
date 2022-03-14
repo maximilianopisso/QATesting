@@ -8,8 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PlaceOrderPage {
-    @FindBy(xpath = "//div[@id='orderModal']//div[@class='modal-header']")
-    WebElement orderModalSection;
 
     @FindBy(id = "name")
     WebElement inputName;
@@ -35,7 +33,6 @@ public class PlaceOrderPage {
     @FindBy(xpath = "//button[text()='Purchase']")
     WebElement buttonPurchase;
 
-
     WebDriver driver;
 
     public PlaceOrderPage(WebDriver driver) {
@@ -43,17 +40,28 @@ public class PlaceOrderPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void formComplete(int time) {
-        WebDriverWait wait = new WebDriverWait(driver, time);
-        wait.until(ExpectedConditions.elementToBeClickable(orderModalSection));
+    public void setName(String name) {
+        inputName.sendKeys(name);
+    }
 
-        inputName.sendKeys("Maximiliano");
-        inputCountry.sendKeys("Argentina");
-        inputCity.sendKeys("Rosario");
-        inputCreditCard.sendKeys("4555990045759871");
-        inputMonth.sendKeys("12");
-        inputYear.sendKeys("2023");
+    public void setCountry(String country) {
+        inputCountry.sendKeys(country);
+    }
 
+    public void setCity(String city) {
+        inputCity.sendKeys(city);
+    }
+
+    public void setCreditCard(String card) {
+        inputCreditCard.sendKeys(card);
+    }
+
+    public void setMonth(String month) {
+        inputMonth.sendKeys(month);
+    }
+
+    public void setYear(String year) {
+        inputYear.sendKeys(year);
     }
 
     public void clickPurchase() {
@@ -64,4 +72,14 @@ public class PlaceOrderPage {
         buttonClose.click();
     }
 
+    public void formComplete(int time) {
+        WebDriverWait wait = new WebDriverWait(driver, time);
+        wait.until(ExpectedConditions.elementToBeClickable(inputName));
+        setName("Maximiliano");
+        setCountry("Argentina");
+        setCity("Rosario");
+        setCreditCard("4555990015485487");
+        setMonth("12");
+        setYear("2023");
+    }
 }

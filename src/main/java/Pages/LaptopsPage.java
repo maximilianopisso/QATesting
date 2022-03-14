@@ -1,5 +1,6 @@
 package Pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,6 +13,8 @@ public class LaptopsPage {
     @FindBy (xpath ="//div[@id='tbodyid']//div[1]//div[1]//a[1]//img")
     WebElement laptopsFirstProduct;
 
+    By listLaptop = By.xpath("//div[@class='card-block']");
+
     WebDriver driver;
 
     public LaptopsPage(WebDriver driver){
@@ -22,5 +25,9 @@ public class LaptopsPage {
     public void clickFirstLaptop(int time){
         WebDriverWait wait = new WebDriverWait(driver,time);
         wait.until(ExpectedConditions.elementToBeClickable(laptopsFirstProduct)).click();
+    }
+
+    public java.util.List<WebElement> obtenerLaptops (){
+        return driver.findElements(listLaptop);
     }
 }
