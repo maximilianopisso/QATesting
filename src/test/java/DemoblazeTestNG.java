@@ -1,5 +1,4 @@
 import Pages.*;
-import Utility.DriverFactory;
 import Utility.PropertiesFile;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
@@ -18,13 +17,14 @@ import java.util.List;
 public class DemoblazeTestNG {
 
     private String url = PropertiesFile.getProperty("url");
-    private WebDriver driver = DriverFactory.getDriver();
+   // private WebDriver driver = DriverFactory.getDriver();
     private final int MAX_EXPLICIT_WAIT = 10;
+
     @BeforeTest
     public void beforeTest() {
         System.out.println(" * Execution Before Test * ");
-        driver.manage().window().maximize();
-        driver.navigate().to(url);
+        HomePage homePage = new HomePage();
+        homePage.nativagetoHome();
     }
 
     @Test
@@ -35,27 +35,27 @@ public class DemoblazeTestNG {
         String precio;
 
         // Instancias de Pages
-        IndexPage indexPage = new IndexPage(driver);
-        LaptopsPage laptopsPage = new LaptopsPage(driver);
-        ProductDetailPage productDetailPage = new ProductDetailPage(driver);
-        MenuPage menuPage = new MenuPage(driver);
-        CartPage cartPage = new CartPage(driver);
-        PlaceOrderPage placeOrderPage =new PlaceOrderPage(driver);
-        ConfirmationPage confirmationPage = new ConfirmationPage(driver);
+        HomePage homePage = new HomePage();
+        LaptopsPage laptopsPage = new LaptopsPage();
+        ProductDetailPage productDetailPage = new ProductDetailPage();
+        MenuPage menuPage = new MenuPage();
+        CartPage cartPage = new CartPage();
+        PlaceOrderPage placeOrderPage =new PlaceOrderPage();
+        ConfirmationPage confirmationPage = new ConfirmationPage();
+        Waits waits = new Waits();
 
         // Clickear Categoria Laptops
-        indexPage.clickLaptopCategory();
+        homePage.clickLaptopCategory();
 
-        // Espera a que sea clicleable y le hace click
-
-     /*   List<WebElement> listado = new ArrayList<WebElement>();
+        // Tomo todas las cards y las muestro
+        List<WebElement> listado = new ArrayList<WebElement>();
         listado = laptopsPage.obtenerLaptops();
+        listado.forEach(webElement -> System.out.println(webElement.getText()));
 
-        listado.forEach(webElement -> System.out.println(webElement.getText()));*/
+        // Click en la primer Laptop
+        laptopsPage.clickFirstLaptop();
 
-        laptopsPage.clickFirstLaptop(MAX_EXPLICIT_WAIT);
-
-        // Obtengo modelo y precio del articulo e imprimo en consola
+        // Obtengo el modelo y precio del articulo e imprimo en consola
         modelo = productDetailPage.getModel();
         precio = convertirAPrecio(productDetailPage.getPrice());
         System.out.println("- Product Detail Info -" + "\n" + "Modelo: " + modelo + "\n" + "Precio: " + precio);
@@ -63,40 +63,35 @@ public class DemoblazeTestNG {
         // Agrego al cart el producto seleccionado
         productDetailPage.clickAddToCart();
 
-        // Espero a que aparezca la alerta, obtengo su texto y la acepto.
-        WebDriverWait wait = new WebDriverWait(driver, MAX_EXPLICIT_WAIT);
-        wait.until(ExpectedConditions.alertIsPresent());
-        Alert alert = driver.switchTo().alert();
-        String alertmessage = alert.getText();
-        alert.accept();
-
-        // Compara texto de la alerta con el texto esperado "producto agregado"
-        Assert.assertEquals("Product added", alertmessage);
+        // Espero a la presencia del alert, retorno testo y lo con el texto esperado "producto agregado"
+        Assert.assertEquals("Product added", waits.waitForAlert());
 
         // Ingreso Tab Cart
         menuPage.navigateToCart();
 
         // Obtengo titulo y precio
-        System.out.println("- Cart Info -" + "\n" +"Título: " + cartPage.getTittle(MAX_EXPLICIT_WAIT) +"\n"+ "Precio: " + cartPage.getPrice(10));
-        Assert.assertEquals(modelo, cartPage.getTittle(MAX_EXPLICIT_WAIT));
-        Assert.assertEquals(precio, cartPage.getPrice(MAX_EXPLICIT_WAIT));
+        System.out.println("- Cart Info -" + "\n" +"Título: " + cartPage.getTittle() +"\n"+ "Precio: " + cartPage.getPrice());
+        Assert.assertEquals(modelo, cartPage.getTittle());
+        Assert.assertEquals(precio, cartPage.getPrice());
 
-        cartPage.clickOrder(MAX_EXPLICIT_WAIT);
+        //Click Place Order
+        cartPage.clickOrder();
 
         //Completar Formulario de Compra y Click en "Purchase"
-        placeOrderPage.formComplete(MAX_EXPLICIT_WAIT);
+        placeOrderPage.formComplete("Maximiliano", "Argentina","Rosario","4555990015746584","12","2022");
         placeOrderPage.clickPurchase();
 
-        //De la confirmacion de compra obtengo el texto y doy click al boton "OK"
-        Assert.assertEquals(confirmationPage.getTitte(MAX_EXPLICIT_WAIT),"Thank you for your purchase!");
-        confirmationPage.clickOkButton(MAX_EXPLICIT_WAIT);
+        //Comparo texto de la confirmacion de compra y doy click al boton "OK"
+        Assert.assertEquals(confirmationPage.getTitle(),"Thank you for your purchase!");
+        confirmationPage.clickOkButton();
     }
 
     @AfterTest
     public void AfterTest() {
         System.out.println(" * Execution After Test * ");
         // Cierro Navegador
-        driver.quit();
+        HomePage homePage = new HomePage();
+        homePage.quit();
     }
 
     public String convertirAPrecio(String price) {

@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class PlaceOrderPage {
+public class PlaceOrderPage extends BasePage{
 
     @FindBy(id = "name")
     WebElement inputName;
@@ -33,53 +33,50 @@ public class PlaceOrderPage {
     @FindBy(xpath = "//button[text()='Purchase']")
     WebElement buttonPurchase;
 
-    WebDriver driver;
-
-    public PlaceOrderPage(WebDriver driver) {
-        this.driver = driver;
+    public PlaceOrderPage() {
+        this.driver = getDriver();
         PageFactory.initElements(driver, this);
     }
 
     public void setName(String name) {
-        inputName.sendKeys(name);
+        SendKeysToWebElement(inputName, name);
     }
 
     public void setCountry(String country) {
-        inputCountry.sendKeys(country);
+        SendKeysToWebElement(inputCountry,country);
     }
 
     public void setCity(String city) {
-        inputCity.sendKeys(city);
+        SendKeysToWebElement(inputCity,city);
     }
 
     public void setCreditCard(String card) {
-        inputCreditCard.sendKeys(card);
+        SendKeysToWebElement(inputCreditCard,card);
     }
 
     public void setMonth(String month) {
-        inputMonth.sendKeys(month);
+        SendKeysToWebElement(inputMonth,month);
     }
 
     public void setYear(String year) {
-        inputYear.sendKeys(year);
+        SendKeysToWebElement(inputYear,year);
     }
 
     public void clickPurchase() {
-        buttonPurchase.click();
+        clickOnWebElement(buttonPurchase);
     }
 
     public void clickClose() {
-        buttonClose.click();
+        clickOnWebElement(buttonClose);
     }
 
-    public void formComplete(int time) {
-        WebDriverWait wait = new WebDriverWait(driver, time);
+    public void formComplete(String name, String country, String city, String creditCard, String month, String year) {
         wait.until(ExpectedConditions.elementToBeClickable(inputName));
-        setName("Maximiliano");
-        setCountry("Argentina");
-        setCity("Rosario");
-        setCreditCard("4555990015485487");
-        setMonth("12");
-        setYear("2023");
+        setName(name);
+        setCountry(country);
+        setCity(city);
+        setCreditCard(creditCard);
+        setMonth(month);
+        setYear(year);
     }
 }

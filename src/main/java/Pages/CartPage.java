@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class CartPage {
+public class CartPage extends BasePage {
 
     @FindBy(xpath = "//tr[@class='success']//td[1]//img")
     WebElement firstImgProductAdded;
@@ -19,37 +19,24 @@ public class CartPage {
     @FindBy(xpath = "//tr[@class='success']//td[3]")
     WebElement firstPriceProductAdded;
 
-    @FindBy(xpath="//button[text()='Place Order']")
+    @FindBy(xpath = "//button[text()='Place Order']")
     WebElement buttonOrder;
 
-    WebDriver driver;
 
-    public CartPage(WebDriver driver) {
-        this.driver = driver;
+    public CartPage() {
+        this.driver = getDriver();
         PageFactory.initElements(driver, this);
     }
 
-    public boolean imageProductIsVisible(int time) {
-        WebDriverWait wait = new WebDriverWait(driver, time);
-        wait.until(ExpectedConditions.visibilityOf(firstImgProductAdded));
-        return firstImgProductAdded.isDisplayed();
+    public String getTittle() {
+        return getTextFromWebElement(firstTittleProductAdded);
     }
 
-    public String getTittle(int time) {
-        WebDriverWait wait = new WebDriverWait(driver, time);
-        wait.until(ExpectedConditions.visibilityOf(firstTittleProductAdded));
-        return firstTittleProductAdded.getText();
+    public String getPrice() {
+        return getTextFromWebElement(firstPriceProductAdded);
     }
 
-    public String getPrice(int time) {
-        WebDriverWait wait = new WebDriverWait(driver, time);
-        wait.until(ExpectedConditions.visibilityOf(firstPriceProductAdded));
-        return firstPriceProductAdded.getText();
-    }
-
-    public void clickOrder(int time){
-        WebDriverWait wait = new WebDriverWait(driver, time);
-        wait.until(ExpectedConditions.elementToBeClickable(buttonOrder));
-        buttonOrder.click();
+    public void clickOrder() {
+        clickOnWebElement(buttonOrder);
     }
 }

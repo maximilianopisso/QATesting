@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class ProductDetailPage {
+public class ProductDetailPage extends BasePage {
 
     @FindBy(css = "h2.name")
     WebElement model;
@@ -17,23 +17,21 @@ public class ProductDetailPage {
     @FindBy(linkText = "Add to cart")
     WebElement addToCart;
 
-    WebDriver driver;
-
-    public ProductDetailPage(WebDriver driver) {
-        this.driver = driver;
+    public ProductDetailPage() {
+        this.driver = getDriver();
         PageFactory.initElements(driver, this);
     }
 
     public String getPrice() {
-        return price.getText();
+        return getTextFromWebElement(price);
     }
 
     public String getModel() {
-        return model.getText();
+        return getTextFromWebElement(model);
     }
 
     public void clickAddToCart() {
-        addToCart.click();
+        clickOnWebElement(addToCart);
     }
 
 }

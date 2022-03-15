@@ -7,31 +7,24 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ConfirmationPage {
+public class ConfirmationPage extends BasePage {
 
-    @FindBy (xpath = "//div[contains(@class,'showSweetAlert visible')]")
-    WebElement sweetAlertModal;
+    @FindBy(xpath = "//div[contains(@class,'showSweetAlert visible')]//h2[text()='Thank you for your purchase!']")
+    WebElement title;
 
-    @FindBy (xpath = "//div[contains(@class,'showSweetAlert visible')]//h2[text()='Thank you for your purchase!']")
-    WebElement sweetAlertTittle;
+    @FindBy(xpath = "//div[contains(@class,'showSweetAlert visible')]//button[text()='OK']")
+    WebElement confirmButton;
 
-    @FindBy (xpath = "//div[contains(@class,'showSweetAlert visible')]//button[normalize-space()='OK']")
-    WebElement sweetAlertButton;
-
-    WebDriver driver;
-
-    public ConfirmationPage(WebDriver driver){
-        this.driver = driver;
+    public ConfirmationPage() {
+        this.driver = getDriver();
         PageFactory.initElements(driver, this);
     }
 
-    public void clickOkButton (int time){
-        WebDriverWait wait = new WebDriverWait(driver,time);
-        wait.until(ExpectedConditions.elementToBeClickable(sweetAlertButton)).click();
+    public void clickOkButton() {
+        clickOnWebElement(confirmButton);
     }
 
-    public String getTitte (int time){
-        WebDriverWait wait = new WebDriverWait(driver,time);
-        return (wait.until(ExpectedConditions.visibilityOf(sweetAlertTittle)).getText());
+    public String getTitle() {
+        return getTextFromWebElement(title);
     }
 }

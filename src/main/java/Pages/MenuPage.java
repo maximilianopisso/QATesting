@@ -7,19 +7,17 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.awt.*;
 
-public class MenuPage {
+public class MenuPage extends BasePage{
 
     @FindBy(xpath = "//a[text()='Cart']")
     WebElement linkToCart;
 
-    WebDriver driver;
-
-    public MenuPage(WebDriver driver){
-        this.driver = driver;
+    public MenuPage(){
+        this.driver = getDriver();
         PageFactory.initElements(driver, this);
     }
 
     public void navigateToCart() {
-        linkToCart.click();
+        clickOnWebElement(linkToCart);
     }
 }
