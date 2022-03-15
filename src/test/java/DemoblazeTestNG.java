@@ -47,10 +47,10 @@ public class DemoblazeTestNG {
         // Clickear Categoria Laptops
         homePage.clickLaptopCategory();
 
-        // Tomo todas las cards y las muestro
+       /* // Tomo todas las cards y las muestro
         List<WebElement> listado = new ArrayList<WebElement>();
         listado = laptopsPage.obtenerLaptops();
-        listado.forEach(webElement -> System.out.println(webElement.getText()));
+        listado.forEach(webElement -> System.out.println(webElement.getText()));*/
 
         // Click en la primer Laptop
         laptopsPage.clickFirstLaptop();
