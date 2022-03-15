@@ -1,10 +1,6 @@
 import Pages.*;
 import Utility.PropertiesFile;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -28,7 +24,7 @@ public class DemoblazeTestNG {
     }
 
     @Test
-    public void addToCartFistProductLaptops() throws InterruptedException {
+    public void addToCartFistProductLaptops() throws Exception {
 
         // Definicion de variables locales
         String modelo;
@@ -47,13 +43,9 @@ public class DemoblazeTestNG {
         // Clickear Categoria Laptops
         homePage.clickLaptopCategory();
 
-       /* // Tomo todas las cards y las muestro
-        List<WebElement> listado = new ArrayList<WebElement>();
-        listado = laptopsPage.obtenerLaptops();
-        listado.forEach(webElement -> System.out.println(webElement.getText()));*/
-
-        // Click en la primer Laptop
-        laptopsPage.clickFirstLaptop();
+        // Click en la primer Laptop bajo las condiciones de precio min y max
+        laptopsPage.obtenerLaptops(700,800);
+        //laptopsPage.clickFirstLaptop();
 
         // Obtengo el modelo y precio del articulo e imprimo en consola
         modelo = productDetailPage.getModel();
@@ -98,4 +90,6 @@ public class DemoblazeTestNG {
         int finPrecio = price.indexOf("*") - 1;
         return (price.substring(1, finPrecio));
     }
+
+
 }
