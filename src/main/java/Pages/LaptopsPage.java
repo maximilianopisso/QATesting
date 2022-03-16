@@ -31,7 +31,7 @@ public class LaptopsPage extends BasePage {
 
     public void obtenerLaptops(int minPrice, int maxPrice) throws Exception {
         //SINO HAGO LA PAUSA ME TOMA LOS PRECIOS DE LOS CELULARES
-        Thread.sleep(2000);
+        Thread.sleep(3000);
 
         //TOMO TODOS LOS LOS ELEMENTOS PRECIOS EN Y LOS COLOCO EN UNA LISTA DE WEBELEMENTS
         wait.until(ExpectedConditions.visibilityOfAllElements(driver.findElements(preciosLaptops)));
