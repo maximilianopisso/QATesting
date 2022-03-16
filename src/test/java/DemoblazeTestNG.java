@@ -44,12 +44,11 @@ public class DemoblazeTestNG {
         homePage.clickLaptopCategory();
 
         // Click en la primer Laptop bajo las condiciones de precio min y max
-        laptopsPage.obtenerLaptops(700,750);
-        //laptopsPage.clickFirstLaptop();
+        laptopsPage.obtenerLaptops(780,890);
 
         // Obtengo el modelo y precio del articulo e imprimo en consola
         modelo = productDetailPage.getModel();
-        precio = convertirAPrecio(productDetailPage.getPrice());
+        precio = productDetailPage.getPrice();
         System.out.println("- Product Detail Info -" + "\n" + "Modelo: " + modelo + "\n" + "Precio: " + precio);
 
         // Agrego al cart el producto seleccionado
@@ -86,10 +85,6 @@ public class DemoblazeTestNG {
         homePage.quit();
     }
 
-    public String convertirAPrecio(String price) {
-        int finPrecio = price.indexOf("*") - 1;
-        return (price.substring(1, finPrecio));
-    }
 
 
 }

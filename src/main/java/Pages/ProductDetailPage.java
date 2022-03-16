@@ -23,7 +23,10 @@ public class ProductDetailPage extends BasePage {
     }
 
     public String getPrice() {
-        return getTextFromWebElement(price);
+        String priceText = getTextFromWebElement(price);
+        int inicioPrice = priceText.indexOf("$") + 1;
+        int finPrice = priceText.indexOf("*") - 1;
+        return (priceText.substring(inicioPrice, finPrice));
     }
 
     public String getModel() {
@@ -34,4 +37,7 @@ public class ProductDetailPage extends BasePage {
         clickOnWebElement(addToCart);
     }
 
+
+
 }
+
