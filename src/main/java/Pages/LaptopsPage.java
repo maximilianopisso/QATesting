@@ -13,21 +13,13 @@ import java.util.stream.Collectors;
 
 public class LaptopsPage extends BasePage {
 
-   /* @FindBy(xpath = "//div[@id='tbodyid']//div[1]//div[1]//a[1]//img")
-    WebElement laptopsFirstProduct;*/
-
     By preciosLaptops = By.xpath("//h5[contains(text(),'$')]");
-
     By modelLaptops = By.xpath("//h4[@class='card-title']//a");
 
     public LaptopsPage() {
         this.driver = getDriver();
         PageFactory.initElements(driver, this);
     }
-
-   /* public void clickFirstLaptop() {
-        clickOnWebElement(laptopsFirstProduct);
-    }*/
 
     public void obtenerLaptops(int minPrice, int maxPrice) throws Exception {
         //SINO HAGO LA PAUSA ME TOMA LOS PRECIOS DE LOS CELULARES
