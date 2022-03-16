@@ -44,7 +44,7 @@ public class DemoblazeTestNG {
         homePage.clickLaptopCategory();
 
         // Click en la primer Laptop bajo las condiciones de precio min y max
-        laptopsPage.obtenerLaptops(700,800);
+        laptopsPage.obtenerLaptops(700,750);
         //laptopsPage.clickFirstLaptop();
 
         // Obtengo el modelo y precio del articulo e imprimo en consola
