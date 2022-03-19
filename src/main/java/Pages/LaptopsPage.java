@@ -1,19 +1,16 @@
 package Pages;
 
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class LaptopsPage extends BasePage {
 
-    By preciosLaptops = By.xpath("//h5[contains(text(),'$')]");
+    By priceLaptops = By.xpath("//h5[contains(text(),'$')]");
     By modelLaptops = By.xpath("//h4[@class='card-title']//a");
 
     public LaptopsPage() {
@@ -26,14 +23,14 @@ public class LaptopsPage extends BasePage {
         Thread.sleep(2000);
 
         //TOMO TODOS LOS LOS ELEMENTOS PRECIOS EN Y LOS COLOCO EN UNA LISTA DE WEBELEMENTS
-        wait.until(ExpectedConditions.visibilityOfAllElements(driver.findElements(preciosLaptops)));
-        ArrayList<WebElement> listaPreciosWebElements = (ArrayList<WebElement>) driver.findElements(preciosLaptops);
+        wait.until(ExpectedConditions.visibilityOfAllElements(driver.findElements(priceLaptops)));
+        ArrayList<WebElement> listaPreciosWebElements = (ArrayList<WebElement>) driver.findElements(priceLaptops);
 
         //CONVIERTO LISTADO DE WEBELEMENTS EN UNA LISTA DE NUMEROS CON LOS PRECIOS DE CADA WEBELEMENT
         List<Integer> listaPreciosNumber = listaPreciosWebElements.stream().map(webElement -> {
-            String texto = webElement.getText().substring(1, webElement.getText().length());
-            Integer numero = Integer.parseInt(texto);
-            return numero;
+            String text = webElement.getText().substring(1, webElement.getText().length());
+            Integer number = Integer.parseInt(text);
+            return number;
         }).collect(Collectors.toList());
 
         //CAPTURO NUEVAMENTE TODOS LOS ELEMENTOS PERO A LOS QUE PUEDAN HACERSE CLICK (MODELO DE LAPTOPS)
@@ -42,16 +39,15 @@ public class LaptopsPage extends BasePage {
 
         /*RECORRO EL ARREGLO DE PRECIOS, BUSCANDO EL PRIMERO QUE CUMPLA LA CONDICION, SI CUMPLE, TOMO SU POSICION Y HAGO CLICK
          EN EL ELEMENTO QUE OCUPA ESA MISMA POSICION DEL LISTADO DE WEBELEMENTS, SINO, SE LANZA UNA EXCEPCION CON MSJ*/
-        WebElement webElementresult = null;
+        WebElement webElementrResult = null;
         for (int i = 0; i < listaPreciosNumber.size(); i++) {
             if (listaPreciosNumber.get(i) >= minPrice && listaPreciosNumber.get(i) <= maxPrice) {
-                webElementresult = listaModeloWebElements.get(i);
-                System.out.println("Se selecciona el elemento Nº: " + (i + 1));
-                clickOnWebElement(webElementresult);
+                webElementrResult = listaModeloWebElements.get(i);
+                clickOnWebElement(webElementrResult);
                 break;
             }
         }
-        if (webElementresult == null) {
+        if (webElementrResult == null) {
             throw new Exception("NO HAY NINGUN ELEMENTO CON ESA CONDICION DE PRECIOS");
         }
     }

@@ -47,7 +47,6 @@ public class DemoblazeTestNG {
         // Obtengo el modelo y precio del articulo e imprimo en consola
         modelProductDetail = productDetailPage.getModel();
         priceProductDetail = productDetailPage.getPrice();
-        System.out.println("- Product Detail Info -" + "\n" + "Modelo: " + modelProductDetail + "\n" + "Precio: " + priceProductDetail);
 
         // Agrego al cart el producto seleccionado
         productDetailPage.clickAddToCart();
@@ -59,7 +58,6 @@ public class DemoblazeTestNG {
         menuPage.navigateToCart();
 
         // Obtengo titulo y precio
-        System.out.println("- Cart Info -" + "\n" + "Título: " + cartPage.getTittle() + "\n" + "Precio: " + cartPage.getPrice());
         Assert.assertEquals(modelProductDetail, cartPage.getTittle(), "NO COINCIDEN NOMBRES DE MODELO DEL DETALLE Y EL CART");
         Assert.assertEquals(priceProductDetail, cartPage.getPrice(), "NO COINCIDEN PRECIOS DEL DETALLE Y CART");
 
