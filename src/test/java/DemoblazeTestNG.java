@@ -67,7 +67,7 @@ public class DemoblazeTestNG {
         cartPage.clickOrder();
 
         //Completar Formulario de Compra y Click en "Purchase"
-        placeOrderPage.formComplete("Maximiliano", country, city, creditCard, month, year);
+        placeOrderPage.formComplete(name, country, city, creditCard, month, year);
         placeOrderPage.clickPurchase();
 
         //Comparo texto de la confirmacion de compra y doy click al boton "OK"
