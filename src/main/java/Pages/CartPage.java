@@ -10,9 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CartPage extends BasePage {
 
-    @FindBy(xpath = "//tr[@class='success']//td[1]//img")
-    WebElement firstImgProductAdded;
-
     @FindBy(xpath = "//tr[@class='success']//td[2]")
     WebElement firstTittleProductAdded;
 
@@ -21,7 +18,6 @@ public class CartPage extends BasePage {
 
     @FindBy(xpath = "//button[text()='Place Order']")
     WebElement buttonOrder;
-
 
     public CartPage() {
         this.driver = getDriver();

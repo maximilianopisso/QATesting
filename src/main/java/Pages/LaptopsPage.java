@@ -21,9 +21,9 @@ public class LaptopsPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public void obtenerLaptops(int minPrice, int maxPrice) throws Exception {
+    public void clickLaptopInRange(int minPrice, int maxPrice) throws Exception {
         //SINO HAGO LA PAUSA ME TOMA LOS PRECIOS DE LOS CELULARES
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
         //TOMO TODOS LOS LOS ELEMENTOS PRECIOS EN Y LOS COLOCO EN UNA LISTA DE WEBELEMENTS
         wait.until(ExpectedConditions.visibilityOfAllElements(driver.findElements(preciosLaptops)));
@@ -36,18 +36,17 @@ public class LaptopsPage extends BasePage {
             return numero;
         }).collect(Collectors.toList());
 
-        //CAPTURO NUEEVAMENT TODOS LOS ELEMENTOS PERO A LOS QUE PUEDAN HACERSE CLICK (MODELO DE LAPTOPS)
+        //CAPTURO NUEVAMENTE TODOS LOS ELEMENTOS PERO A LOS QUE PUEDAN HACERSE CLICK (MODELO DE LAPTOPS)
         wait.until(ExpectedConditions.visibilityOfAllElements(driver.findElements(modelLaptops)));
         ArrayList<WebElement> listaModeloWebElements = (ArrayList<WebElement>) driver.findElements(modelLaptops);
 
-        WebElement webElementresult = null;
         /*RECORRO EL ARREGLO DE PRECIOS, BUSCANDO EL PRIMERO QUE CUMPLA LA CONDICION, SI CUMPLE, TOMO SU POSICION Y HAGO CLICK
          EN EL ELEMENTO QUE OCUPA ESA MISMA POSICION DEL LISTADO DE WEBELEMENTS, SINO, SE LANZA UNA EXCEPCION CON MSJ*/
-
+        WebElement webElementresult = null;
         for (int i = 0; i < listaPreciosNumber.size(); i++) {
             if (listaPreciosNumber.get(i) >= minPrice && listaPreciosNumber.get(i) <= maxPrice) {
                 webElementresult = listaModeloWebElements.get(i);
-                System.out.println("Se selecciona el elemento Nº: "+(i+1));
+                System.out.println("Se selecciona el elemento Nº: " + (i + 1));
                 clickOnWebElement(webElementresult);
                 break;
             }

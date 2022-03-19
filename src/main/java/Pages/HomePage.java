@@ -7,19 +7,19 @@ import org.openqa.selenium.support.PageFactory;
 
 public class HomePage extends BasePage {
 
-    @FindBy (linkText = "Laptops")
+    @FindBy(linkText = "Laptops")
     WebElement laptopsCategory;
 
-    public HomePage(){
+    public HomePage() {
         this.driver = getDriver();
         PageFactory.initElements(driver, this);
     }
 
-    public void clickLaptopCategory(){
+    public void clickLaptopCategory() {
         clickOnWebElement(laptopsCategory);
     }
 
-    public void nativagetoHome(){
+    public void nativagetoHome() {
         driver.manage().window().maximize();
         driver.navigate().to(PropertiesFile.getProperty("urlHome"));
     }

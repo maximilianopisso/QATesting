@@ -9,11 +9,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ConfirmationPage extends BasePage {
 
-    @FindBy(xpath = "//div[contains(@class,'showSweetAlert visible')]//h2[text()='Thank you for your purchase!']")
+    @FindBy(xpath = "//h2[text()='Thank you for your purchase!']")
     WebElement title;
 
-    @FindBy(xpath = "//div[contains(@class,'showSweetAlert visible')]//button[text()='OK']")
+    @FindBy(xpath = "//button[text()='OK']")
     WebElement confirmButton;
+
+    @FindBy(xpath = "//p[@class='lead text-muted ']")
+    WebElement detailPurchase;
 
     public ConfirmationPage() {
         this.driver = getDriver();
@@ -26,5 +29,9 @@ public class ConfirmationPage extends BasePage {
 
     public String getTitle() {
         return getTextFromWebElement(title);
+    }
+
+    public String getDetailPurchase() {
+        return getTextFromWebElement(detailPurchase);
     }
 }

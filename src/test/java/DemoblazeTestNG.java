@@ -1,42 +1,40 @@
+import Data.DataProviderClass;
 import Pages.*;
 import Utility.PropertiesFile;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class DemoblazeTestNG {
 
     private String url = PropertiesFile.getProperty("url");
-   // private WebDriver driver = DriverFactory.getDriver();
     private final int MAX_EXPLICIT_WAIT = 10;
 
     @BeforeTest
     public void beforeTest() {
         System.out.println(" * Execution Before Test * ");
-        HomePage homePage = new HomePage();
-        homePage.nativagetoHome();
     }
 
-    @Test
-    public void addToCartFistProductLaptops() throws Exception {
+    @Test(dataProvider = "usersForTest", dataProviderClass = DataProviderClass.class)
+    public void addToCartFistProductLaptops(String name, String country, String city, String creditCard, String month, String year) throws Exception {
+
+        HomePage homePage = new HomePage();
+        homePage.nativagetoHome();
 
         // Definicion de variables locales
-        String modelo;
-        String precio;
+        String modelProductDetail;
+        String priceProductDetail;
+        System.out.println("** Inicio de Test ** - User: " + name);
 
         // Instancias de Pages
-        HomePage homePage = new HomePage();
+
         LaptopsPage laptopsPage = new LaptopsPage();
         ProductDetailPage productDetailPage = new ProductDetailPage();
         MenuPage menuPage = new MenuPage();
         CartPage cartPage = new CartPage();
-        PlaceOrderPage placeOrderPage =new PlaceOrderPage();
+        PlaceOrderPage placeOrderPage = new PlaceOrderPage();
         ConfirmationPage confirmationPage = new ConfirmationPage();
         Waits waits = new Waits();
 
@@ -44,47 +42,48 @@ public class DemoblazeTestNG {
         homePage.clickLaptopCategory();
 
         // Click en la primer Laptop bajo las condiciones de precio min y max
-        laptopsPage.obtenerLaptops(780,890);
+        laptopsPage.clickLaptopInRange(780, 890);
 
         // Obtengo el modelo y precio del articulo e imprimo en consola
-        modelo = productDetailPage.getModel();
-        precio = productDetailPage.getPrice();
-        System.out.println("- Product Detail Info -" + "\n" + "Modelo: " + modelo + "\n" + "Precio: " + precio);
+        modelProductDetail = productDetailPage.getModel();
+        priceProductDetail = productDetailPage.getPrice();
+        System.out.println("- Product Detail Info -" + "\n" + "Modelo: " + modelProductDetail + "\n" + "Precio: " + priceProductDetail);
 
         // Agrego al cart el producto seleccionado
         productDetailPage.clickAddToCart();
 
         // Espero a la presencia del alert, retorno testo y lo con el texto esperado "producto agregado"
-        Assert.assertEquals("Product added", waits.waitForAlert());
+        Assert.assertEquals("Product added", waits.waitForAlert(), "NO SE ENCONTRO MESAJE DE PRODUCTO AGREGADO");
 
         // Ingreso Tab Cart
         menuPage.navigateToCart();
 
         // Obtengo titulo y precio
-        System.out.println("- Cart Info -" + "\n" +"Título: " + cartPage.getTittle() +"\n"+ "Precio: " + cartPage.getPrice());
-        Assert.assertEquals(modelo, cartPage.getTittle());
-        Assert.assertEquals(precio, cartPage.getPrice());
+        System.out.println("- Cart Info -" + "\n" + "Título: " + cartPage.getTittle() + "\n" + "Precio: " + cartPage.getPrice());
+        Assert.assertEquals(modelProductDetail, cartPage.getTittle(), "NO COINCIDEN NOMBRES DE MODELO DEL DETALLE Y EL CART");
+        Assert.assertEquals(priceProductDetail, cartPage.getPrice(), "NO COINCIDEN PRECIOS DEL DETALLE Y CART");
 
         //Click Place Order
         cartPage.clickOrder();
 
         //Completar Formulario de Compra y Click en "Purchase"
-        placeOrderPage.formComplete("Maximiliano", "Argentina","Rosario","4555990015746584","12","2022");
+        placeOrderPage.formComplete("Maximiliano", country, city, creditCard, month, year);
         placeOrderPage.clickPurchase();
 
         //Comparo texto de la confirmacion de compra y doy click al boton "OK"
-        Assert.assertEquals(confirmationPage.getTitle(),"Thank you for your purchase!");
+        Assert.assertEquals(confirmationPage.getTitle(), "Thank you for your purchase!", "NO COINCIDE MENSAJE DE AGREDECIMIENTO POR COMPRA");
+        Assert.assertTrue(confirmationPage.getDetailPurchase().contains(name), "NO COINCIDE NOMBRE");
+        Assert.assertTrue(confirmationPage.getDetailPurchase().contains(creditCard), "NO COINCIDE TARJETA DE CREDITO");
+        Assert.assertTrue(confirmationPage.getDetailPurchase().contains(priceProductDetail), "NO COINCIDE PRECIO");
         confirmationPage.clickOkButton();
     }
 
     @AfterTest
     public void AfterTest() {
         System.out.println(" * Execution After Test * ");
-        // Cierro Navegador
         HomePage homePage = new HomePage();
         homePage.quit();
     }
-
 
 
 }
