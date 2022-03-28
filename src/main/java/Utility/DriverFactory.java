@@ -30,16 +30,14 @@ public class DriverFactory {
                 driver = new EdgeDriver();
             }
         }
-            //Espera Implicita en Driver
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-            // Espera Explicita
-            wait = new WebDriverWait(driver, EXPLICIT_WAIT);
-
-            return driver;
-        }
-
-        public static WebDriverWait getWait () {
-            return wait;
-        }
+        //Espera Implicita en Driver
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        // Espera Explicita
+        wait = new WebDriverWait(driver, EXPLICIT_WAIT);
+        return driver;
     }
+
+    public static WebDriverWait getWait() {
+        return wait;
+    }
+}

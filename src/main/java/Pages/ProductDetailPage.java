@@ -37,4 +37,3 @@ public class ProductDetailPage extends BasePage {
         clickOnWebElement(addToCart);
     }
 }
-

@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 
-public class DemoblazeTestNG {
+public class DemoblazeFinal {
 
     private String url = PropertiesFile.getProperty("url");
     private final int MAX_EXPLICIT_WAIT = 10;
@@ -29,7 +29,6 @@ public class DemoblazeTestNG {
         System.out.println("** Inicio de Test ** - User: " + name);
 
         // Instancias de Pages
-
         LaptopsPage laptopsPage = new LaptopsPage();
         ProductDetailPage productDetailPage = new ProductDetailPage();
         MenuPage menuPage = new MenuPage();
@@ -82,6 +81,4 @@ public class DemoblazeTestNG {
         HomePage homePage = new HomePage();
         homePage.quit();
     }
-
-
 }
