@@ -1,25 +1,25 @@
 
 
-const Page = require('./page');
+const BasePage = require('./base.page');
 
 /**
  * sub page containing specific selectors and methods for a specific page
  */
-class LoginPage extends Page {
+class LoginPage extends BasePage {
     /**
      * define selectors using getter methods
      */
-    get inputUsername () {
-        return $('#username');
-    }
+    // get inputUsername () {
+    //     return $('#username');
+    // }
 
-    get inputPassword () {
-        return $('#password');
-    }
+    // get inputPassword () {
+    //     return $('#password');
+    // }
 
-    get btnSubmit () {
-        return $('button[type="submit"]');
-    }
+    // get btnSubmit () {
+    //     return $('button[type="submit"]');
+    // }
 
     /**
      * a method to encapsule automation code to interact with the page
