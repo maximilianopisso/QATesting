@@ -1,37 +1,15 @@
 const BasePage = require('./base.page');
 
-/**
- * sub page containing specific selectors and methods for a specific page
- */
 class FormPage extends BasePage {
-    /**
-     * Se definen los selectors
-     */
 
-    get inputName() {
-        return $("#name");
-    }
-    get inputCountry() {
-        return $("#country");
-    }
-    get inputCity() {
-        return $("#city");
-    }
-    get inputCard() {
-        return $("#card");
-    }
-    get inputMonth() {
-        return $("#month");
-    }
-    get inputYear() {
-        return $("#year");
-    }
+    get inputName() { return $("#name"); }
+    get inputCountry() { return $("#country"); }
+    get inputCity() { return $("#city"); }
+    get inputCard() { return $("#card"); }
+    get inputMonth() { return $("#month"); }
+    get inputYear() { return $("#year"); }
+    get buttonPurchase() { return $("//button[text()='Purchase']"); }
 
-    get buttonPurchase() {
-        return $("//button[text()='Purchase']");
-    }
-
-   
     async setName(name) {
         this.sendKeysToWebElement(this.inputName, name);
     }
@@ -56,25 +34,18 @@ class FormPage extends BasePage {
         this.sendKeysToWebElement(this.inputYear, year);
     }
 
-
-    async formComplete(name, country, city, creditCard, month, year) {
-
+    async formComplete(name, country, city, card, month, year) {
         await this.setName(name);
         await this.setCountry(country);
         await this.setCity(city);
-        await this.setCreditCard(creditCard);
+        await this.setCreditCard(card);
         await this.setMonth(month);
         await this.setYear(year);
     }
 
-    /**
-     * Hace click sobre la categoria Laptops
-     * 
-     */
-     async clickPurchaseButton() {
+    async clickPurchaseButton() {
         await this.clickOnWebElement(this.buttonPurchase);
     }
-
 }
 
 module.exports = new FormPage();
