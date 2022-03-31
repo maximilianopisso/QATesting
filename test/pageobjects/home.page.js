@@ -7,29 +7,29 @@ class HomePage extends BasePage {
     /**
      * Se definen los selectors
      */
-    get laptopsCatergory () {
+    get laptopsCatergory() {
         return $("//a[text()='Laptops']");
     }
-  
+
     /**
      * Hace click sobre la categoria Laptops
      * 
      */
-    async clickLaptopCategory () {
+    async clickLaptopCategory() {
         await this.clickOnWebElement(this.laptopsCatergory)
     }
 
     /**
      * Abre el browser lo maximiza y carga la URL pasada por parametro
      */
-    async navigateTo(url){
+    async navigateTo(url) {
         await browser.maximizeWindow();
         await browser.url(url);
     }
     /**
      * Cierra el browser
      */
-    async closeURL(){
+    async closeURL() {
         await browser.closeWindow();
     }
 }

@@ -1,0 +1,76 @@
+const LoginPage = require('../pageobjects/login.page');
+const HomePage = require('../pageobjects/home.page');
+const ProductsPage = require('../pageobjects/products.page');
+const ProductsDetailPage = require('../pageobjects/products.detail.page');
+const CartPage = require('../pageobjects/cart.page');
+const MenuPage = require('../pageobjects/menu.page');
+const FormPage = require('../pageobjects/form.page');
+const ConfirmPage = require('../pageobjects/confirm.page');
+
+
+const URL = 'https://www.demoblaze.com/';
+
+describe('Mi Primera Prueba Automatica con WebDriverIO', () => {
+    it('Prueba Demoblaze', async () => {
+
+        // Inicio la URL
+        await HomePage.navigateTo(URL);
+
+        // Hago click en categoria "Laptos"
+        await HomePage.clickLaptopCategory();
+
+        // Hago click la primer Laptop
+        await ProductsPage.clickFirstLaptop();
+
+        // Obtengo Modelo y Precio del Detalle del Producto. Hago click en Add to Cart.
+        const modelDetail = await ProductsDetailPage.getModel();
+        const priceDetail = await ProductsDetailPage.getPrice();
+    
+        await expect(priceDetail).toEqual("790");
+        await expect(modelDetail).toEqual("Sony vaio i5");
+
+        await ProductsDetailPage.clickToAddCart();
+
+        // Capturo el msj de la alerta, comparo msj, acepto alerta.
+        await browser.pause(1000);
+        if (await browser.isAlertOpen()) {
+            const msjAlert = await browser.getAlertText();
+            await browser.acceptAlert();
+            await expect(msjAlert).toEqual("Product added");
+        }
+
+        // Navego a Seccion Cart
+        await MenuPage.navegatoToSectionCart();
+
+        // Obtengo Modelo y Precio del Cart. Comparo con los precios del Detalle del Producto y luego Hago click en Order
+        const modelCart = await CartPage.getModel();
+        const priceCart = await CartPage.getPrice();
+        await expect(priceDetail).toEqual(priceCart);
+        await expect(modelDetail).toEqual(modelCart);
+        await CartPage.clickOrderButton();    
+
+        //Relleno Formulario y hago click en "Purchase"
+        
+        await FormPage.formComplete("NOMBRE", "PAIS", "CIUDAD", "TARJETA CREDITO", "MES", "AÑO");
+        await FormPage.clickPurchaseButton();
+
+        //Traigo Titulo del msj de confirmacion y parrafo completo y hago comparaciones finales
+        await browser.pause(5000);
+        const tituloMsj =  await ConfirmPage.getTitlePurchaseMsj();
+        const paragraphMsj = await ConfirmPage.getDetailPurchaseMsj();
+        await expect(tituloMsj).toHaveTextContaining("Thank you for your purchase!");
+        await expect(paragraphMsj.contains("NOMBRE")).toBe(true);
+        await expect(paragraphMsj.contains("TARJETA CREDITO")).toBe(true);
+        await expect(paragraphMsj.contains(priceDetail)).toBe(true);
+        
+
+        await browser.pause(5000);
+
+
+        await HomePage.closeURL();
+
+
+    });
+});
+
+
